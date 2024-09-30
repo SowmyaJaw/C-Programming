@@ -1,0 +1,11 @@
+#include<stdio.h>
+int main()
+{
+    float a=10;
+    float b=20;
+    float c=a*b;
+    printf( "multiply of the two numbers:%.2f",c);
+    return 0;
+}    
+
+
