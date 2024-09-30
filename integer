@@ -1,0 +1,8 @@
+#include<stdio.h>
+int main()
+{
+    int a=2;
+    printf("To print an integer %d",a);
+    return 0;
+}    
+
