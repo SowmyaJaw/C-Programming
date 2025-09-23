@@ -1,0 +1,115 @@
+#include <stdio.h>
+#include<stdlib.h>
+struct Node 
+{
+    int data;
+    struct Node *left;
+    struct Node *right;
+};
+struct Node *create(int d)
+{
+    struct Node *newnode=(struct Node *)malloc(sizeof(struct Node));
+    newnode->data=d;
+    newnode->left=NULL;
+    newnode->right=NULL;
+    return newnode;
+}
+struct Node *insert(int d,struct Node *root)
+{
+    if(root==NULL)
+    {
+        root=create(d);
+        return root;
+    }
+    else
+    {
+        struct Node *curr=root;
+        while(1)
+        {
+            if(d<curr->data)
+            {
+                if(curr->left==NULL)
+                {
+                    curr->left=create(d);
+                    return root;
+                }
+                else
+                {
+                    curr=curr->left;
+                }
+            }
+            else
+            {
+                if(d>curr->data)
+                {
+                    if(curr->right==NULL)
+                    {
+                        curr->right=create(d);
+                        return root;
+                    }
+                    else
+                    {
+                        curr=curr->right;
+                    }
+                }
+            }
+        }
+    }
+}
+struct Node *inorderSuccessor(struct Node *root)
+{
+    struct Node *curr=root;
+    while(curr->left!=NULL)
+    curr=curr->left;
+    return curr;
+}
+struct Node *del(struct Node *root,int d)
+{
+    if(root==NULL)
+    return NULL;
+    else
+    {
+        if(d<root->data)
+        root->left=del(root->left,d);
+        else if(d>root->data)
+        root->right=del(root->right,d);
+        else
+        {
+            struct Node *temp;
+            if(root->left==NULL)
+            {
+                temp=root->right;
+                free(root);
+                return temp;
+            }
+            else if(root->right==NULL)
+            {
+                temp=root->left;
+                free(root);
+                return temp;
+            }
+            else
+            {
+                struct Node *succ=inorderSuccessor(root->right);
+                root->data=succ->data;
+                root=del(root->right,succ->data);
+            }
+        }
+    }
+    return root;
+}
+int main()
+{
+    struct Node *root=NULL;
+    root=insert(50,root);
+      root=insert(30,root);
+       root=insert(20,root);
+        root=insert(40,root);
+         root=insert(70,root);
+          root=insert(60,root);
+           root=insert(80,root);
+           postorder(root);
+           printf("\n");
+           preorder(root);
+    return 0;
+}
